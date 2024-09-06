@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tracking</title>
+</head>
+<body>
+    {% block content %}
+    <h1>Tracking Selected Products</h1>
+
+    {% if tracking_entries %}
+    <table>
+        <thead>
+            <tr>
+                <th>Product Name</th>
+                <th>Price</th>
+                <th>Description</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for entry in tracking_entries %}
+            <tr>
+                <td>{{ entry.product.name }}</td>
+                <td>${{ entry.product.price }}</td>
+                <td>{{ entry.product.description }}</td>
+                <td>{{ entry.status }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>No products selected for tracking.</p>
+    {% endif %}
+    {% endblock content %}
+</body>
+</html>

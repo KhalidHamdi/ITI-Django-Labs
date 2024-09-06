@@ -1,0 +1,12 @@
+<!-- mart/templates/mart/show.html -->
+
+{% extends "base.html" %} {% block content %}
+<h2>Selected Products</h2>
+<ul>
+  {% if selected_products %} {% for product in selected_products %}
+  <li>{{ product.name }} - ${{ product.price }}</li>
+  {% endfor %} {% else %}
+  <li>No products selected</li>
+  {% endif %}
+</ul>
+{% endblock content %}

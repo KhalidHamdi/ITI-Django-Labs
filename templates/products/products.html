@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block content %}
+<form method="post" action="{% url 'home' %}">
+  
+  {% csrf_token %}
+  <div class="container py-5">
+    <h1 class="mb-4 text-primary">Products List</h1>
+    <div class="row">
+      {% for product in products %}
+      <div class="col-md-4 mb-4">
+        <div class="card h-100 shadow-sm">
+          {% if product.image %}
+          <img
+            src="{{ product.image.url }}"
+            class="card-img-top"
+            alt="{{ product.name }}"
+            style="max-height: 200px; object-fit: cover;"
+          />
+          {% endif %}
+          <div class="card-body d-flex flex-column">
+            <h5 class="card-title">
+              <a href="{% url 'product' product.id %}" class="text-dark">
+                {{ product.name }}
+              </a>
+            </h5>
+            <p class="card-text text-truncate">{{ product.description }}</p>
+            <p class="text-success font-weight-bold">
+              Price: ${{ product.price }}
+            </p>
+            <p class="text-muted">
+              Available: 
+              <span class="{{ product.active|yesno:'text-success:text-danger' }}">
+                {{ product.active|yesno:'Yes:No' }}
+              </span>
+            </p>
+          </div>
+          <div class="card-footer bg-transparent border-top-0">
+            <a href="{% url 'product' product.id %}" class="btn btn-primary btn-block">
+              View Details
+            </a>
+            <a href="{% url 'add_to_cart' product.id %}" class="btn btn-primary">Add to Cart</a>
+            <div class="form-check">
+              <input type="checkbox" name="selected_products" value="{{ product.id }}" class="form-check-input">
+              <label class="form-check-label">Select</label>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% empty %}
+      <p class="text-center">No products available.</p>
+      {% endfor %}
+    </div>
+    <button type="submit" class="btn btn-primary mt-4">Go to Mart</button>
+  </div>
+</form>
+{% endblock content %}

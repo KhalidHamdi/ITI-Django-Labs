@@ -1,0 +1,40 @@
+{% extends "base.html" %} {% block content %}
+<div class="container py-5">
+  <div class="card shadow-sm">
+    <div class="row no-gutters">
+      {% if product.image %}
+      <div class="col-md-6">
+        <img
+          src="{{ product.image.url }}"
+          class="card-img-top img-fluid"
+          alt="{{ product.name }}"
+          style="max-height: 400px; object-fit: cover"
+        />
+      </div>
+      {% endif %}
+      <div class="col-md-6">
+        <div class="card-body">
+          <h1 class="card-title text-primary">{{ product.name }}</h1>
+          <p class="card-text">{{ product.description }}</p>
+          <p class="card-text text-success font-weight-bold">
+            Price: ${{ product.price }}
+          </p>
+          <p class="card-text">
+            <small class="text-muted"
+              >Available:
+              <span
+                class="font-weight-bold {{ product.active|yesno:'text-success:text-danger' }}"
+              >
+                {{ product.active|yesno:'Yes:No' }}
+              </span>
+            </small>
+          </p>
+          <a href="{% url 'products' %}" class="btn btn-primary mt-3"
+            >Back to Products</a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}
